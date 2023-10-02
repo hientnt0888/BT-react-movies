@@ -41,7 +41,6 @@ body {
 }
 
 .rowNumber {
-    /* font-size: 25px; */
     width: 45px;
     height: 35px;
     background: none;
@@ -74,17 +73,23 @@ body {
 
 .gheDuocChon {
     border: 3px solid orange;
-
     background: orange;
     color: #000;
 
-    cursor: no-drop !important;
+    /* cursor: no-drop !important; */
     border-radius: 5px;
-    width: 45px;
+    width: 150px;
     height: 35px;
 
 }
+.gheConTrong{
+    border: 3px solid orange;
+    color: #000;
+    border-radius: 5px;
+    width: 150px;
 
+
+}
 .gheDangChon {
     background: rgb(109, 238, 109);
     border: 3px solid rgb(109, 238, 109);
@@ -92,16 +97,23 @@ body {
 
     cursor: pointer;
     border-radius: 5px;
-    width: 45px;
-    height: 35px;
+    width: 150px;
+    margin: 20px 0;
+
+    /* width: 45px;
+    height: 35px; */
 
 }
 
-.table td {
-    border: none;
+.table td , .table th{
+    /* border: none; */
     color: yellowgreen;
+    text-align: center;
 }
-
+.table-seat td{
+    text-align: unset;
+    border: none;
+}
 input[type=checkbox] {
     width: 0;
 }

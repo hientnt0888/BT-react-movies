@@ -171,13 +171,13 @@ export default class ListSeat extends Component {
         }
 
     ]
-
+    array = [];
     setListSeat = () => {
         return this.arraySeat.map((obj) => {
             let { hang, danhSachGhe } = obj;
             return   <tr key={hang}>
                 <td>{hang}</td>
-                <RowChair danhSachGhe={danhSachGhe}/>
+                <RowChair danhSachGhe={danhSachGhe} array={this.array}/>
             </tr>
           
            
@@ -187,7 +187,7 @@ export default class ListSeat extends Component {
 
     render() {
         return (
-            <table className='table'>
+            <table className='table table-seat'>
                 <tbody>
                     <tr>
                         <td></td>
