@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { GHEDADAT } from '../../redux/reducers/Project-movies/creator'
 
 class SelectedSeat extends Component {
+    state = {
+        listReservedSeat: [],
+    }
+
+
 
     setTableSelectSeat = () => {
         return this.props.selectSeat.map((seat) => {
@@ -9,14 +15,41 @@ class SelectedSeat extends Component {
             return <tr key={soGhe}>
                 <td>{soGhe}</td>
                 <td>{gia}</td>
-                <td><button className='btn btn-warning'>Đặt</button></td>
+                <td><button className='btn btn-warning'
+                    onClick={() => {
+                        this.props.dispatch(GHEDADAT(seat))
+                        this.state.listReservedSeat.push(seat)
+                        alert("Đặt chỗ thành công")
+                    }}
+
+                >Đặt</button></td>
             </tr>
         })
     }
-
+    cancel = (seat) => {
+        let newstate = this.state.listReservedSeat.filter((content) => {
+            return content !== seat
+        })
+        this.setState({
+            listReservedSeat: newstate,
+        })
+        alert("Bạn vừa hủy số ghế: " + seat.soGhe)
+    }
+    setTableReservedSeat = () => {
+        return this.state.listReservedSeat.map((seat) => {
+            let { soGhe, gia } = seat
+            return <tr key={soGhe}>
+                <td>{soGhe}</td>
+                <td>{gia}</td>
+                <td><button className='btn btn-warning' onClick={() => {
+                    this.cancel(seat)
+                }}>Hủy</button></td>
+            </tr>
+        })
+    }
+   
 
     render() {
-        console.log(this.props.selectSeat, "select")
         return (
             <div>
                 <div>
@@ -26,11 +59,9 @@ class SelectedSeat extends Component {
                     <button type="button" className="gheDangChon" data-toggle="collapse" href="#ghedangchon">Ghế đang chọn</button>
                 </div>
                 <div>
-                    <button type="button" className="gheConTrong" data-toggle="collapse" href="#ghecontrong">Ghế còn trống</button>
+                    <button type="button" className="gheConTrong" data-toggle="collapse" href="#ghecontrong" >Ghế còn trống</button>
                 </div>
-                {/* <button>Ghế đã đặt</button>
-                <button className='gheDangChon'></button><span></span>
-                <button>Ghế chưa đặt</button> */}
+
 
                 <div id="ghedangchon" className='collapse'>
                     <h2 style={{ textAlign: "center" }}>Danh sách ghế bạn chọn</h2>
@@ -58,7 +89,7 @@ class SelectedSeat extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {this.setTableSelectSeat()} */}
+                            {this.setTableReservedSeat()}
                         </tbody>
                     </table>
                 </div>
@@ -68,8 +99,6 @@ class SelectedSeat extends Component {
                         <thead>
                             <tr>
                                 <th scope="col">Số ghế</th>
-                                <th scope="col">Giá</th>
-                                <th scope="col">Đặt ghế</th>
                             </tr>
                         </thead>
                         <tbody>

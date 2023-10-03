@@ -1,17 +1,20 @@
-import { MOVIES } from "./creator";
+import { MOVIES } from "./const";
 const state_default = [
-   
+
 ]
 
-export const movieReducer = (state = state_default,action) => {
-    console.log("🚀 ~ file: reducer.js:10 ~ movieReducer ~ action:", action)
+export const movieReducer = (state = state_default, action) => {
     switch (action.type) {
-        case "pushArray":
+        case MOVIES.gheDangChon:
             state = action.payload
-            console.log("🚀 ~ file: reducer.js:14 ~ movieReducer ~ state:", state)
             return [...state]
+        case MOVIES.gheDaDat:
+           state = state.filter((content) => { 
+                return content !== action.payload
+             })
+             return [...state]
         default:
             return [...state]
+
     }
-    // return {state}
 }
