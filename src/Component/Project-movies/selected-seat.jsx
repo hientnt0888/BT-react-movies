@@ -3,11 +3,46 @@ import { connect } from 'react-redux'
 import { GHEDADAT } from '../../redux/reducers/Project-movies/creator'
 
 class SelectedSeat extends Component {
+
     state = {
         listReservedSeat: [],
+        arrayEmpty: [],
     }
 
+    arraySeat = this.props.arraySeat;
 
+
+    setListEmpty = (aa) => {
+        const arrayObjSeat = []
+        this.arraySeat.map((obj) => {
+            return obj.danhSachGhe.map((LS) => {
+                return arrayObjSeat.push(LS)
+            })
+        })
+        this.state.arrayEmpty = arrayObjSeat.filter((itemA) => {
+            return !aa.some((itemB) => {
+                return itemB.soGhe === itemA.soGhe
+            })
+        })
+        this.setState({
+            arrayEmpty: this.state.arrayEmpty
+        })
+
+    }
+
+    setTableEmptySeat = () => {
+        const i = this.state.arrayEmpty.map((obj) => {
+            return obj.soGhe
+        })
+        console.log(i.join())
+        return <tr>
+        <td style={{textAlign:"unset"}}>{i.join(" ").replace(/(.{8})/g, "$1\n")}
+
+            </td>
+        </tr >
+
+
+    }
 
     setTableSelectSeat = () => {
         return this.props.selectSeat.map((seat) => {
@@ -19,20 +54,24 @@ class SelectedSeat extends Component {
                     onClick={() => {
                         this.props.dispatch(GHEDADAT(seat))
                         this.state.listReservedSeat.push(seat)
+                        this.setListEmpty(this.state.listReservedSeat)
                         alert("Đặt chỗ thành công")
                     }}
 
                 >Đặt</button></td>
             </tr>
+
         })
     }
-    cancel = (seat) => {
+    cancel = async (seat) => {
         let newstate = this.state.listReservedSeat.filter((content) => {
             return content !== seat
         })
-        this.setState({
+        await this.setState({
             listReservedSeat: newstate,
         })
+        this.setListEmpty(this.state.listReservedSeat)
+
         alert("Bạn vừa hủy số ghế: " + seat.soGhe)
     }
     setTableReservedSeat = () => {
@@ -47,9 +86,10 @@ class SelectedSeat extends Component {
             </tr>
         })
     }
-   
+
 
     render() {
+
         return (
             <div>
                 <div>
@@ -59,7 +99,11 @@ class SelectedSeat extends Component {
                     <button type="button" className="gheDangChon" data-toggle="collapse" href="#ghedangchon">Ghế đang chọn</button>
                 </div>
                 <div>
-                    <button type="button" className="gheConTrong" data-toggle="collapse" href="#ghecontrong" >Ghế còn trống</button>
+                    <button type="button" className="gheConTrong" data-toggle="collapse" href="#ghecontrong"
+                        onClick={() => {
+                            this.setListEmpty(this.state.listReservedSeat)
+                        }}
+                    >Ghế còn trống</button>
                 </div>
 
 
@@ -95,7 +139,7 @@ class SelectedSeat extends Component {
                 </div>
                 <div id="ghecontrong" className='collapse'>
                     <h2 style={{ textAlign: "center" }}>Danh sách ghế còn trống</h2>
-                    <table className="table table-bordered " >
+                    <table className="table table-bordered table-hover" >
                         <thead>
                             <tr>
                                 <th scope="col">Số ghế</th>
@@ -103,6 +147,7 @@ class SelectedSeat extends Component {
                         </thead>
                         <tbody>
                             {/* {this.setTableSelectSeat()} */}
+                            {this.setTableEmptySeat()}
                         </tbody>
                     </table>
                 </div>
