@@ -34,14 +34,25 @@ class SelectedSeat extends Component {
         const i = this.state.arrayEmpty.map((obj) => {
             return obj.soGhe
         })
-        console.log(i.join())
         return <tr>
-        <td style={{textAlign:"unset"}}>{i.join(" ").replace(/(.{8})/g, "$1\n")}
+            <td style={{ textAlign: "unset" }}>{i.join(" ").replace(/(([^ ]+ ){10}[^ ]+)/g, "$1\n")}
 
             </td>
         </tr >
 
 
+    }
+
+    checkReserved = (seat) => {
+        const check =  this.state.listReservedSeat.findIndex((obj) => {
+            return seat.soGhe == obj.soGhe
+        })
+        if (check !== -1) {
+            alert("Chỗ ngồi đã được đặt")
+        } else {
+            this.state.listReservedSeat.push(seat)
+            alert("Đặt chỗ thành công")
+        }
     }
 
     setTableSelectSeat = () => {
@@ -53,9 +64,9 @@ class SelectedSeat extends Component {
                 <td><button className='btn btn-warning'
                     onClick={() => {
                         this.props.dispatch(GHEDADAT(seat))
-                        this.state.listReservedSeat.push(seat)
+                        // this.state.listReservedSeat.push(seat)
+                        this.checkReserved(seat)
                         this.setListEmpty(this.state.listReservedSeat)
-                        alert("Đặt chỗ thành công")
                     }}
 
                 >Đặt</button></td>
@@ -89,7 +100,6 @@ class SelectedSeat extends Component {
 
 
     render() {
-
         return (
             <div>
                 <div>
