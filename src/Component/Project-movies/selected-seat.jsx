@@ -44,7 +44,7 @@ class SelectedSeat extends Component {
     }
 
     checkReserved = (seat) => {
-        const check =  this.state.listReservedSeat.findIndex((obj) => {
+        const check = this.state.listReservedSeat.findIndex((obj) => {
             return seat.soGhe == obj.soGhe
         })
         if (check !== -1) {
@@ -101,22 +101,35 @@ class SelectedSeat extends Component {
 
     render() {
         return (
-            <div>
-                <div>
-                    <button type="button" className="gheDuocChon" data-toggle="collapse" href="#ghedadat">Ghế đã đặt</button>
-                </div>
-                <div>
-                    <button type="button" className="gheDangChon" data-toggle="collapse" href="#ghedangchon">Ghế đang chọn</button>
-                </div>
-                <div>
-                    <button type="button" className="gheConTrong" data-toggle="collapse" href="#ghecontrong"
-                        onClick={() => {
-                            this.setListEmpty(this.state.listReservedSeat)
-                        }}
-                    >Ghế còn trống</button>
-                </div>
+            <>
+
+                <button type="button" className="gheDuocChon" data-toggle="collapse" href="#ghedadat">Ghế đã đặt</button>
 
 
+                <button type="button" className="gheDangChon" data-toggle="collapse" href="#ghedangchon">Ghế đang chọn</button>
+
+
+                <button type="button" className="gheConTrong" data-toggle="collapse" href="#ghecontrong"
+                    onClick={() => {
+                        this.setListEmpty(this.state.listReservedSeat)
+                    }}
+                >Ghế còn trống</button>
+
+
+                <div id="ghecontrong" className='collapse'>
+                    <h2 style={{ textAlign: "center" }}>Danh sách ghế còn trống</h2>
+                    <table className="table table-bordered table-hover" >
+                        <thead>
+                            <tr>
+                                <th scope="col">Số ghế</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* {this.setTableSelectSeat()} */}
+                            {this.setTableEmptySeat()}
+                        </tbody>
+                    </table>
+                </div>
                 <div id="ghedangchon" className='collapse'>
                     <h2 style={{ textAlign: "center" }}>Danh sách ghế bạn chọn</h2>
                     <table className="table table-bordered " >
@@ -147,23 +160,10 @@ class SelectedSeat extends Component {
                         </tbody>
                     </table>
                 </div>
-                <div id="ghecontrong" className='collapse'>
-                    <h2 style={{ textAlign: "center" }}>Danh sách ghế còn trống</h2>
-                    <table className="table table-bordered table-hover" >
-                        <thead>
-                            <tr>
-                                <th scope="col">Số ghế</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* {this.setTableSelectSeat()} */}
-                            {this.setTableEmptySeat()}
-                        </tbody>
-                    </table>
-                </div>
 
 
-            </div>
+
+            </>
         )
     }
 }

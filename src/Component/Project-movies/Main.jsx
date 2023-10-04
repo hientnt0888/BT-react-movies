@@ -185,7 +185,7 @@ export default class Main extends Component {
             </div>
           </div>
           <div className="col-5">
-            <div className="container">
+            <div className="container mt-4">
             <SelectedSeat arraySeat={this.arraySeat}/>
 
             </div>
